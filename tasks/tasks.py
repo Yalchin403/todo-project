@@ -21,5 +21,3 @@ def send_emails():
             """
         send_mail(subject, message, EMAIL_HOST_USER, [email], fail_silently = False)
     return True
-
-send_emails()
