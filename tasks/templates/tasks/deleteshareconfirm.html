@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <form class="modal-content" method='POST' action="">
+      {% csrf_token %}
+      <div class="container">
+        <h1>Delete Task</h1>
+              <p>Are you sure to delete share named {{permission.task.title}} shared with {{permission.user.username}}?</p>
+
+        <div class="clearfix">
+          <a href="{% url 'tasks:home' %}"><button type="button" class="btn btn-primary">Cancel</button></a>
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
+{% endblock %}

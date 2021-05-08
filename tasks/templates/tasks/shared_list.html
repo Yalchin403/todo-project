@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body style="background-color:powderblue;">
+    <br>
+    <div class="container">
+      {% for task in permissions %}
+        {% if task.task.done == True %}
+        <strike>
+        <p> <b>Task title: {{task.task.title}}</b> </p> <br>
+        </strike>
+        {% else %}
+        <p> <b>Task title: {{task.task.title}}</b> </p> <br>
+        {% endif %}
+        <pre>
+        Task Description: {{task.task.description}}<br>
+        Task Deadline: {{task.task.deadline}}
+        {% if task.task.done == True %}
+        Task is completed and striked
+        {% else %}
+        Task is not completed yet.
+        {% endif %}
+        {% if task.mode %}
+        <a href="{% url 'comments:comment' task.task.id %}"><button type="button" class="btn btn-primary">Details</button></a>
+        {% endif %}
+        </pre>
+
+    {% endfor %}
+    </div>
+  </body>
+</html>
+{% endblock %}

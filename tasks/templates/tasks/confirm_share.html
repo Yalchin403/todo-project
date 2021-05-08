@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Share</title>
+  </head>
+  <body>
+
+    <form class="modal-content" method='POST' action="">
+      {% csrf_token %}
+      <div class="container">
+        <h1>Share {{task}}</h1>
+
+        <div class="clearfix">
+          <label for="username">Username</label><br>
+          <input type="text" name="username" value=""><br>
+          <label for="mode">Should user have comment writing permission?</label><br>
+          <input type="checkbox" name="mode" value="Yes"><br>
+          <button type="submit" class="btn btn-primary">Share</button>
+
+        </div>
+      </div>
+    </form>
+
+    <div class="container">
+
+      <h2>Already Shared</h2>
+        {% for task in shared%}
+            <form action="" method="POST">
+                {{task.task.title}} shared with {{task.user.username}}
+
+            <a href="{% url 'tasks:delete-share' task.id %}"><button type="button" class="btn btn-primary">Delete</button></a>
+          </form>
+        {% endfor %}
+    </div>
+
+    </form>
+  </body>
+</html>
+{% endblock %}
