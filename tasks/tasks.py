@@ -12,6 +12,7 @@ from todo.settings import EMAIL_HOST_USER
 def send_emails():
     tasks = Task.objects.all()
     for task in tasks:
+
         email = task.owner.email
         subject = f"Your {task.title} task is not done yet"
         message = f"""
@@ -20,4 +21,3 @@ def send_emails():
             Don't forget to get it done!
             """
         send_mail(subject, message, EMAIL_HOST_USER, [email], fail_silently = False)
-    return True
