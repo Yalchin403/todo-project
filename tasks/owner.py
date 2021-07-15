@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Task
 
+
 class OwnerListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         qs = Task.objects.order_by('deadline')

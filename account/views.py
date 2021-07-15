@@ -24,7 +24,6 @@ class SignUp(View):
             form.save()
             user = form.cleaned_data.get('username')
             user_obj = User.objects.get(username=user)
-            user_obj.is_active = False
             user_obj.save()
             messages.success(request, f'{user}, account has been successfully created for you')
             return redirect('account:signIn')
@@ -39,19 +38,17 @@ class SignIn(View):
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user_obj = User.objects.get(username=username)
+        
         user = authenticate(request, username=username, password=password)
-
-        if user_obj.is_active:
-            if user is not None:
-                login(request, user)
-                return redirect('tasks:home')
+        if user is not None:
+            login(request, user)
+            return redirect('tasks:home')
             
-            else:
-                messages.info(request, 'Email or password invalid')
-                return render(request, 'account/signin.html')
+        else:
+            messages.info(request, 'Username or password invalid')
+            return render(request, 'account/signin.html')
 
-        messages.error(request, "Your account is not active!")
+        messages.error(request, "Failed to Log You In!")
         return render(request, 'account/signin.html')
 
 

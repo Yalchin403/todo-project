@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgres:latest
+    environment: 
+      - POSTGRES_PASSWORD=MyPostgres-12
+    volumes:
+        - pgdata:/var/lib/postgresql/data/
+  migration:
+      build: .
+      command:  bash -c "python3 manage.py makemigrations && python3 manage.py migrate"
+      depends_on: 
+        - db
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    links:
+      - db:db
+      - redis:redis
+
+    
+    volumes:
+      - /static:/static
+      - media:/media
+    env_file: .env
+    # command:  daphne todo.asgi:application --bind 0.0.0.0:8000
+    command: bash -c "python3 manage.py runserver 0.0.0.0:8000"
+
+    depends_on: 
+      - migration
+      - db
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: madefire/chordtest
+    command: bash -c "celery -A todo worker -l INFO"
+    environment:
+      - BROKER_URL=redis://redis:6379/0
+      - RESULT_BACKEND=redis://redis:6379/0
+      - C_FORCE_ROOT=true
+    volumes:
+      - ./:/app/
+    depends_on:
+      - redis 
+
+ 
+
+volumes:
+  media:
+  pgdata:

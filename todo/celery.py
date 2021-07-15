@@ -21,12 +21,12 @@ app = Celery('todo')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-app.conf.beat_schedule = {
-    'send_emails-every-5-seconds': {
-        'task': 'tasks.tasks.send_emails',
-        'schedule': timedelta(seconds=5),
-    }
-}
+# app.conf.beat_schedule = {
+#     'send_emails-every-5-seconds': {
+#         'task': 'tasks.tasks.send_emails',
+#         'schedule': timedelta(seconds=5),
+#     }
+# }
 
 app.conf.timezone = 'UTC'
 

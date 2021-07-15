@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from decouple import config
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +26,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [config('ALLOWED_HOSTS', default="localhost")]
+# ALLOWED_HOSTS = [config('ALLOWED_HOSTS', default="localhost")]
+ALLOWED_HOSTS=['*']
 
 # Application definition
 
@@ -75,32 +77,36 @@ TEMPLATES = [
 # django-channels stuff
 
 WSGI_APPLICATION = 'todo.wsgi.application'
-ASGI_APPLICATION = "todo.asgi.application"
+ASGI_APPLICATION = "todo.routing.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('redis', 6379)],
         },
     },
 }
 
 # celery stuff
 
-CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = DATABASES = {
-    'default': {
+DATABASES = {
+    'default': {        
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('HOST'),
+        'HOST': "db",
+        'NAME': "postgres",
+        'USER': "postgres",
+        'PASSWORD': "postgres",
     }
 }
 

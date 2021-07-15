@@ -10,7 +10,6 @@ class Task(models.Model):
     deadline = models.DateTimeField()
     done = models.BooleanField(default = False)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
-    is_notified = models.BooleanField(default=False)
 
     
     def __str__(self):
