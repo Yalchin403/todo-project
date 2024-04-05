@@ -1,0 +1,10 @@
+celery
+channels
+channels-redis
+daphne
+Django
+django-celery-beat
+django-celery-results
+psycopg2-binary
+pytz
+redis

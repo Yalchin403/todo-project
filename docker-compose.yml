@@ -1,7 +1,6 @@
-version: '3'
+version: "3.9"
 
 services:
-  
   redis:
     image: "redis:latest"
     ports:
@@ -9,15 +8,13 @@ services:
 
   db:
     image: postgres:latest
-    environment: 
-      - POSTGRES_PASSWORD=MyPostgres-12
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "admin"
+      POSTGRES_DB: "root"
+
     volumes:
-        - pgdata:/var/lib/postgresql/data/
-  migration:
-      build: .
-      command:  bash -c "python3 manage.py makemigrations && python3 manage.py migrate"
-      depends_on: 
-        - db
+      - pgdata:/var/lib/postgresql/data/
 
   web:
     build: .
@@ -27,16 +24,18 @@ services:
       - db:db
       - redis:redis
 
-    
     volumes:
-      - /static:/static
-      - media:/media
-    env_file: .env
-    # command:  daphne todo.asgi:application --bind 0.0.0.0:8000
-    command: bash -c "python3 manage.py runserver 0.0.0.0:8000"
+      - type: bind
+        source: .
+        target: /app
 
-    depends_on: 
-      - migration
+    env_file: .env
+    command: bash -c "python3 manage.py makemigrations &&
+      python3 manage.py migrate &&
+      python3 manage.py collectstatic --no-input &&
+      python3 manage.py runserver 0.0.0.0:8000"
+
+    depends_on:
       - db
 
   worker:
@@ -52,9 +51,7 @@ services:
     volumes:
       - ./:/app/
     depends_on:
-      - redis 
-
- 
+      - redis
 
 volumes:
   media:

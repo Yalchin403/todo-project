@@ -43,7 +43,7 @@ class TaskShare(View):
     def post(self, request, pk):
         username = request.POST.get('username')
         mode = request.POST.get('mode')
-        sharedUsername = User.objects.get(username = username)
+        sharedUsername = User.objects.get(username=username)
         task = Task.objects.get(id = pk)
         is_exist = Permission.objects.filter(task=task, user=sharedUsername)
         if is_exist:

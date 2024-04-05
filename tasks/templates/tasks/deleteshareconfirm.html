@@ -1,25 +1,47 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-
-    <form class="modal-content" method='POST' action="">
-      {% csrf_token %}
-      <div class="container">
-        <h1>Delete Task</h1>
-              <p>Are you sure to delete share named {{permission.task.title}} shared with {{permission.user.username}}?</p>
-
-        <div class="clearfix">
-          <a href="{% url 'tasks:home' %}"><button type="button" class="btn btn-primary">Cancel</button></a>
-          <button type="submit" class="btn btn-primary">Delete</button>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Delete a shared task from your to-do list.">
+    <meta name="keywords" content="to-do list, task management, delete task, shared task">
+    <title>Delete Shared Task | To Do</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            background-color: #f5f3e7;
+            font-family: 'Roboto', sans-serif;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="modal-content">
+                    <form method='POST' action="">
+                        {% csrf_token %}
+                        <h1 class="text-center mb-4"><i class="fas fa-trash-alt mr-2"></i>Delete Task</h1>
+                        <p class="lead mb-4">Are you sure you want to delete the task <strong>"{{ permission.task.title }}"</strong> shared with <strong>{{ permission.user.username }}</strong>?</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'tasks:home' %}" class="btn btn-secondary mr-3"><i class="fas fa-times mr-2"></i>Cancel</a>
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt mr-2"></i>Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
-    </form>
-  </body>
+    </div>
+</body>
 </html>
 {% endblock %}

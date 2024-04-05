@@ -1,17 +1,50 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <p>
-      Hello everyone, this web app offers you to organize your tasks based on their deadlines,
-      tasks with earlier deadlines will appear first, once task is completed, you will see this task striked.
-      If task is not complited till 10 minutes before the deadline, you will get an email, reminding you,
-      about the task that you need to accomplish. You can share the tasks with other users, you can also drop comments
-      on the tasks which make the disccusion of task available with the  people that you've shared task with.
-
-    </p>
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A task management app that organizes tasks based on deadlines, sends reminders, and allows collaboration and discussion.">
+    <meta name="keywords" content="task management, to-do list, deadline tracking, reminders, collaboration, comments">
+    <title>Task Organizer - Manage Tasks, Meet Deadlines, Collaborate Seamlessly</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+          background-color: #f5f3e7;
+      }
+  </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static 'images/about.jpg' %}" alt="About Task Organizer" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">
+                            <i class="fas fa-tasks mr-2"></i>About Task Organizer
+                        </h1>
+                        <p class="card-text">
+                            Task Organizer is a powerful web application designed to help individuals and teams stay organized and productive. With its intuitive interface and advanced features, Task Organizer streamlines task management, ensuring that you never miss a deadline.
+                        </p>
+                        <p class="card-text">
+                            One of the key features of Task Organizer is its ability to prioritize tasks based on their deadlines. Tasks with earlier due dates are prominently displayed, helping you focus on the most urgent tasks first. Once a task is completed, it is visually struck through, providing a clear overview of your progress.
+                        </p>
+                        <p class="card-text">
+                            To ensure that you stay on top of your commitments, Task Organizer sends timely email reminders for tasks that are approaching their deadlines. This proactive approach helps you avoid missed deadlines and maintain a high level of productivity.
+                        </p>
+                        <p class="card-text">
+                            Task Organizer also promotes collaboration by allowing you to share tasks with other users and facilitate discussions through comments. This feature is particularly useful for team projects, where multiple individuals can contribute to and monitor the progress of shared tasks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
